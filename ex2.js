@@ -12,8 +12,15 @@
  * @param {number} postId
  * @returns {Promise} resolves after the result was printed (so whoever calls the function can wait for it)
  */
-function getPost(postId) {
-  // write your code here
+async function getPost(postId) {
+  try {
+    const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`);
+    const post = await response.json();
+    console.log(`Post title: ${post.title}`);
+  } catch (error) {
+    console.log("Something went wrong:", error.message);
+  }
 }
+
 
 module.exports = { getPost };

@@ -15,8 +15,19 @@
  * @param {number} todoId
  * @returns {Promise} resolves after the result was printed (so whoever calls the function can wait for it)
  */
-function todoAndUser(todoId) {
-  // write your code here
+async function todoAndUser(todoId) {
+  try {
+    const todoResponse = await fetch(`https://jsonplaceholder.typicode.com/todos/${todoId}`);
+    const todo = await todoResponse.json();
+
+    const userResponse = await fetch(`https://jsonplaceholder.typicode.com/users/${todo.userId}`);
+    const user = await userResponse.json();
+
+    console.log(`Todo title: ${todo.title}`);
+    console.log(`User name: ${user.name}`);
+  } catch (error) {
+    console.log("Something went wrong:", error.message);
+  }
 }
 
 module.exports = { todoAndUser };
